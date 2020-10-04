@@ -5,95 +5,32 @@ import java.util.Scanner;
 public class Executor {
 
 	public static void main(String[] args) {
-		Contacts contactObj = new Contacts();
+		AddressBook addressBookObj = new AddressBook();
 		Scanner sc = new Scanner(System.in);
-		boolean check = false;
+		int choice = 0;
 		System.out.println("Welcome to the address book");
+		while (choice != 4) {
+			System.out.println("Pick an option");
+			System.out.println("1. Add a contact");
+			System.out.println("2. Edit an existing Contact");
+			System.out.println("3. See the contact list");
+			System.out.println("4. Exit");
+			choice = Integer.parseInt(sc.nextLine());
 
-		while (!check) {
-			try {
-				System.out.println("Enter the first name");
-				check = contactObj.setFirstName(sc.nextLine());
-			} catch (AddressBookException e) {
-				System.out.println(e.getMessage());
+			if (choice == 1) {
+				addressBookObj.AddContact();
+			}
+			if (choice == 2) {
+				System.out.println("Enter First Name :");
+				String firstName = sc.nextLine();
+				System.out.println("Enter Last Name :");
+				String lastName = sc.nextLine();
+				addressBookObj.EditContact(firstName, lastName);
+			}
+			if (choice == 3) {
+				addressBookObj.DisplayContacts();
 			}
 		}
-		check = false;
-
-		while (!check) {
-			try {
-				System.out.println("Enter the last name");
-				check = contactObj.setLastName(sc.nextLine());
-			} catch (AddressBookException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		check = false;
-
-		while (!check) {
-			try {
-				System.out.println("Enter the address");
-				check = contactObj.setAddress(sc.nextLine());
-			} catch (AddressBookException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		check = false;
-
-		while (!check) {
-			try {
-				System.out.println("Enter the city");
-				check = contactObj.setCity(sc.nextLine());
-			} catch (AddressBookException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		check = false;
-
-		while (!check) {
-			try {
-				System.out.println("Enter the state");
-				check = contactObj.setState(sc.nextLine());
-			} catch (AddressBookException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		check = false;
-
-		while (!check) {
-			try {
-				System.out.println("Enter the zip code");
-				check = contactObj.setZip(sc.nextLine());
-			} catch (AddressBookException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		check = false;
-
-		while (!check) {
-			try {
-				System.out.println("Enter the phone number");
-				check = contactObj.setPhoneNo(sc.nextLine());
-			} catch (AddressBookException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		check = false;
-
-		while (!check) {
-			try {
-				System.out.println("Enter the email");
-				check = contactObj.setEmail(sc.nextLine());
-
-			} catch (AddressBookException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		System.out.println(contactObj.getFirstName() + " " + contactObj.getLastName());
-		System.out.println(contactObj.getAddress() + " " + contactObj.getCity() + " " + contactObj.getState() + " "
-				+ contactObj.getZip());
-		System.out.println(contactObj.getPhoneNo());
-		System.out.println(contactObj.getEmail());
 
 	}
 }

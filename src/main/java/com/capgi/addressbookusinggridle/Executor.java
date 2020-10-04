@@ -35,7 +35,7 @@ public class Executor {
 			} else if (choice == 4) {
 				addressBookObj.DisplayContacts();
 			} else if (choice == 5) {
-				System.out.println("Thank You");
+				System.out.println("Thank You!");
 				choice = 6;
 			} else {
 				System.out.println("Enter correct choice");

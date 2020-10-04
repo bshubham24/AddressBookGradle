@@ -181,6 +181,21 @@ public class AddressBook {
 
 	}
 
+	public void DeleteContact(String firstName, String lastName) {
+		if (contactList.isEmpty()) {
+			System.out.println("No contacts present");
+		} else {
+
+			for (Contacts item : contactList) {
+				if ((item.getFirstName().equals(firstName)) && (item.getLastName().equals(lastName))) {
+					contactList.remove(item);
+					break;
+				}
+			}
+		}
+
+	}
+
 	public void DisplayContacts() {
 		if (contactList.isEmpty()) {
 			System.out.println("No contacts present");

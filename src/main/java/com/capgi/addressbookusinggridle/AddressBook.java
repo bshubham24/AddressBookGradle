@@ -1,7 +1,6 @@
 package com.capgi.addressbookusinggridle;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class AddressBook {
@@ -9,9 +8,8 @@ public class AddressBook {
 	Contacts contactObj = new Contacts();
 
 	ArrayList<Contacts> contactList = new ArrayList<Contacts>();
-	HashMap<String, ArrayList<Contacts>> addressBook = new HashMap<String, ArrayList<Contacts>>();
 
-	public void AddContact() {
+	public ArrayList<Contacts> AddContact() {
 		Contacts contactObj = new Contacts();
 		boolean check = false;
 		while (!check) {
@@ -95,6 +93,7 @@ public class AddressBook {
 		}
 		contactList.add(contactObj);
 		System.out.println("Contact Added");
+		return contactList;
 	}
 
 	public void EditContact(String firstName, String lastName) {
@@ -208,4 +207,5 @@ public class AddressBook {
 			}
 		}
 	}
+
 }

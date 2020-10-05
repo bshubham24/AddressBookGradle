@@ -170,12 +170,10 @@ public class AddressBook {
 						break;
 					}
 
-				} else {
-					System.out.println("No such person present");
-					break;
 				}
-
 			}
+
+			System.out.println("No such person present");
 		}
 
 	}

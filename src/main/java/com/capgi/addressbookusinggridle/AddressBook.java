@@ -7,9 +7,7 @@ public class AddressBook {
 	Scanner sc = new Scanner(System.in);
 	Contacts contactObj = new Contacts();
 
-	ArrayList<Contacts> contactList = new ArrayList<Contacts>();
-
-	public ArrayList<Contacts> AddContact() {
+	public Contacts AddContact() {
 		Contacts contactObj = new Contacts();
 		boolean check = false;
 		while (!check) {
@@ -91,17 +89,16 @@ public class AddressBook {
 				System.out.println(e.getMessage());
 			}
 		}
-		contactList.add(contactObj);
 		System.out.println("Contact Added");
-		return contactList;
+		return contactObj;
 	}
 
-	public void EditContact(String firstName, String lastName) {
-		if (contactList.isEmpty()) {
+	public void EditContact(String firstName, String lastName, ArrayList<Contacts> tempList) {
+		if (tempList.isEmpty()) {
 			System.out.println("No contacts present");
 		} else {
 			boolean check = false;
-			for (Contacts item : contactList) {
+			for (Contacts item : tempList) {
 				if ((item.getFirstName().equals(firstName)) && (item.getLastName().equals(lastName))) {
 					System.out.println("What do you want to edit");
 					String choice = sc.nextLine().toLowerCase();
@@ -172,20 +169,21 @@ public class AddressBook {
 
 				}
 			}
-
-			System.out.println("No such person present");
+			if (check)
+				System.out.println("Contact edited Successfully");
+			else
+				System.out.println("No Such Person present");
 		}
-
 	}
 
-	public void DeleteContact(String firstName, String lastName) {
-		if (contactList.isEmpty()) {
+	public void DeleteContact(String firstName, String lastName, ArrayList<Contacts> tempList) {
+		if (tempList.isEmpty()) {
 			System.out.println("No contacts present");
 		} else {
 
-			for (Contacts item : contactList) {
+			for (Contacts item : tempList) {
 				if ((item.getFirstName().equals(firstName)) && (item.getLastName().equals(lastName))) {
-					contactList.remove(item);
+					tempList.remove(item);
 					break;
 				}
 			}
@@ -193,12 +191,13 @@ public class AddressBook {
 
 	}
 
-	public void DisplayContacts() {
-		if (contactList.isEmpty()) {
+	public void DisplayContacts(ArrayList<Contacts> tempList) {
+		ArrayList<Contacts> contactList1 = tempList;
+		if (contactList1.isEmpty()) {
 			System.out.println("No contacts present");
 		} else {
 			int count = 0;
-			for (Contacts item : contactList) {
+			for (Contacts item : contactList1) {
 				count++;
 				System.out.println("Contact no." + count + " \n" + item.toString());
 

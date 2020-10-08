@@ -19,7 +19,7 @@ public class MultipleAddressBook {
 		ArrayList<Contacts> tempList = new ArrayList<Contacts>();
 		while (choice != 6) {
 			System.out.println("Pick an option");
-			System.out.println("1. Add a contact");
+			System.out.println("1. Add a contact(Duplicate not allowed)");
 			System.out.println("2. Edit an existing Contact");
 			System.out.println("3. Delete a contact");
 			System.out.println("4. See the contact list");
@@ -27,8 +27,9 @@ public class MultipleAddressBook {
 			choice = Integer.parseInt(sc.nextLine());
 
 			if (choice == 1) {
+				Contacts contactObj = addressBookObj.AddContact(bookName, tempList);
 
-				tempList.add(addressBookObj.AddContact());
+				tempList.add(contactObj);
 				addressBook.put(bookName, tempList);
 			} else if (choice == 2) {
 				System.out.println("Enter First Name :");
@@ -66,7 +67,6 @@ public class MultipleAddressBook {
 
 			System.out.println("Please give the name of existing address book that you want your contact into");
 			String TempBookName = sc.nextLine();
-
 			boolean find = addressBook.containsKey(TempBookName);
 			if (find) {
 				ArrayList<Contacts> tempList = addressBook.get(TempBookName);
@@ -81,8 +81,14 @@ public class MultipleAddressBook {
 					choice = Integer.parseInt(sc.nextLine());
 
 					if (choice == 1) {
-						tempList.add(addressBookObj.AddContact());
-						addressBook.put(TempBookName, tempList);
+						Contacts contactObj = addressBookObj.AddContact(TempBookName, tempList);
+						if (contactObj.getAddress() != null) {
+
+							tempList.add(contactObj);
+							System.out.println("Contact added");
+							addressBook.put(TempBookName, tempList);
+						}
+
 					} else if (choice == 2) {
 						System.out.println("Enter First Name :");
 						String firstName = sc.nextLine();
@@ -111,9 +117,9 @@ public class MultipleAddressBook {
 		}
 	}
 
-	public ArrayList<Contacts> getList(String bookName) {
-		ArrayList<Contacts> tempList = new ArrayList<Contacts>();
-		tempList = addressBook.get(bookName);
-		return tempList;
-	}
-}
+	/*
+	 * public ArrayList<Contacts> getList(String bookName) { ArrayList<Contacts>
+	 * tempList = new ArrayList<Contacts>(); System.out.println(addressBook.size());
+	 * if (addressBook.size() != 0) { tempList = addressBook.get(bookName); return
+	 * tempList; } return tempList; }
+	 */}

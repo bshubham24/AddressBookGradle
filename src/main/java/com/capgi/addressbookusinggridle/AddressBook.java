@@ -2,18 +2,24 @@ package com.capgi.addressbookusinggridle;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class AddressBook {
 	Scanner sc = new Scanner(System.in);
 	Contacts contactObj = new Contacts();
+	String fName = null;
+	String lName = null;
 
-	public Contacts AddContact() {
+	public Contacts AddContact(String bookName, ArrayList<Contacts> tempList) {
 		Contacts contactObj = new Contacts();
 		boolean check = false;
+
 		while (!check) {
 			try {
 				System.out.println("Enter the first name");
-				check = contactObj.setFirstName(sc.nextLine());
+				fName = sc.nextLine();
+				check = contactObj.setFirstName(fName);
+
 			} catch (AddressBookException e) {
 				System.out.println(e.getMessage());
 			}
@@ -23,74 +29,94 @@ public class AddressBook {
 		while (!check) {
 			try {
 				System.out.println("Enter the last name");
-				check = contactObj.setLastName(sc.nextLine());
+				lName = sc.nextLine();
+				check = contactObj.setLastName(lName);
 			} catch (AddressBookException e) {
 				System.out.println(e.getMessage());
 			}
 		}
 		check = false;
+		/*
+		 * boolean duplicate = false; //
+		 * System.out.println(multipleAddressBook.getList(bookName).size()); if
+		 * (multipleAddressBook.getList(bookName).size() != 0) { Predicate<Contacts> Obj
+		 * = (item) -> item.getFirstName().equals(fName) &&
+		 * item.getLastName().equals(lName); duplicate =
+		 * multipleAddressBook.getList(bookName).stream().anyMatch(Obj);
+		 * System.out.println("inside duplicate"); }
+		 */
+		boolean duplicate = false;
+		if (tempList.size() != 0) {
+			Predicate<Contacts> Obj = (item) -> item.getFirstName().equals(fName) && item.getLastName().equals(lName);
+			duplicate = tempList.stream().anyMatch(Obj);
 
-		while (!check) {
-			try {
-				System.out.println("Enter the address");
-				check = contactObj.setAddress(sc.nextLine());
-			} catch (AddressBookException e) {
-				System.out.println(e.getMessage());
-			}
 		}
-		check = false;
 
-		while (!check) {
-			try {
-				System.out.println("Enter the city");
-				check = contactObj.setCity(sc.nextLine());
-			} catch (AddressBookException e) {
-				System.out.println(e.getMessage());
+		if (!duplicate) {
+			while (!check) {
+				try {
+					System.out.println("Enter the address");
+					check = contactObj.setAddress(sc.nextLine());
+				} catch (AddressBookException e) {
+					System.out.println(e.getMessage());
+				}
 			}
-		}
-		check = false;
+			check = false;
 
-		while (!check) {
-			try {
-				System.out.println("Enter the state");
-				check = contactObj.setState(sc.nextLine());
-			} catch (AddressBookException e) {
-				System.out.println(e.getMessage());
+			while (!check) {
+				try {
+					System.out.println("Enter the city");
+					check = contactObj.setCity(sc.nextLine());
+				} catch (AddressBookException e) {
+					System.out.println(e.getMessage());
+				}
 			}
-		}
-		check = false;
+			check = false;
 
-		while (!check) {
-			try {
-				System.out.println("Enter the zip code");
-				check = contactObj.setZip(sc.nextLine());
-			} catch (AddressBookException e) {
-				System.out.println(e.getMessage());
+			while (!check) {
+				try {
+					System.out.println("Enter the state");
+					check = contactObj.setState(sc.nextLine());
+				} catch (AddressBookException e) {
+					System.out.println(e.getMessage());
+				}
 			}
-		}
-		check = false;
+			check = false;
 
-		while (!check) {
-			try {
-				System.out.println("Enter the phone number");
-				check = contactObj.setPhoneNo(sc.nextLine());
-			} catch (AddressBookException e) {
-				System.out.println(e.getMessage());
+			while (!check) {
+				try {
+					System.out.println("Enter the zip code");
+					check = contactObj.setZip(sc.nextLine());
+				} catch (AddressBookException e) {
+					System.out.println(e.getMessage());
+				}
 			}
-		}
-		check = false;
+			check = false;
 
-		while (!check) {
-			try {
-				System.out.println("Enter the email");
-				check = contactObj.setEmail(sc.nextLine());
-
-			} catch (AddressBookException e) {
-				System.out.println(e.getMessage());
+			while (!check) {
+				try {
+					System.out.println("Enter the phone number");
+					check = contactObj.setPhoneNo(sc.nextLine());
+				} catch (AddressBookException e) {
+					System.out.println(e.getMessage());
+				}
 			}
+			check = false;
+
+			while (!check) {
+				try {
+					System.out.println("Enter the email");
+					check = contactObj.setEmail(sc.nextLine());
+
+				} catch (AddressBookException e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			return contactObj;
+		} else {
+			System.out.println("This person already exist. You can chooose edit or delete option!");
+			return contactObj;
 		}
-		System.out.println("Contact Added");
-		return contactObj;
 	}
 
 	public void EditContact(String firstName, String lastName, ArrayList<Contacts> tempList) {

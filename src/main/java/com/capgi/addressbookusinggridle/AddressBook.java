@@ -1,6 +1,8 @@
 package com.capgi.addressbookusinggridle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Predicate;
 
@@ -228,6 +230,26 @@ public class AddressBook {
 				System.out.println("Contact no." + count + " \n" + item.toString());
 
 			}
+		}
+	}
+
+	public void SearchCityOrStateByName(String fName, String lName, HashMap<String, ArrayList<Contacts>> addressBook) {
+		boolean check = false;
+		ArrayList<Contacts> tempList = new ArrayList<Contacts>();
+		for (Map.Entry<String, ArrayList<Contacts>> mapElement : addressBook.entrySet()) {
+
+			tempList = mapElement.getValue();
+			check = tempList.stream()
+					.anyMatch(obj -> obj.getFirstName().equals(fName) && obj.getLastName().equals(lName));
+			if (check) {
+				break;
+			}
+		}
+		if (check) {
+			tempList.stream()
+					.forEach(obj -> System.out.println("City: " + obj.getCity() + " " + "State: " + obj.getState()));
+		} else {
+			System.out.println("Person not present");
 		}
 	}
 

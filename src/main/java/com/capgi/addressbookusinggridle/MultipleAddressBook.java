@@ -117,12 +117,70 @@ public class MultipleAddressBook {
 		}
 	}
 
-	public void SearchCityOrStateByName1() {
+	public void SearchCityOrStateByName() {
 		System.out.println("Enter First Name :");
 		String fName = sc.nextLine();
 		System.out.println("Enter Last Name :");
 		String lName = sc.nextLine();
-		addressBookObj.SearchCityOrStateByName(fName, lName, addressBook);
+		boolean check = false;
+		ArrayList<Contacts> tempList = new ArrayList<Contacts>();
+		for (Map.Entry<String, ArrayList<Contacts>> mapElement : addressBook.entrySet()) {
+
+			tempList = mapElement.getValue();
+			check = tempList.stream()
+					.anyMatch(obj -> obj.getFirstName().equals(fName) && obj.getLastName().equals(lName));
+			if (check) {
+				break;
+			}
+		}
+		if (check) {
+			tempList.stream()
+					.forEach(obj -> System.out.println("City: " + obj.getCity() + " " + "State: " + obj.getState()));
+		} else {
+			System.out.println("Person not present");
+		}
+	}
+
+	public void ViewPersonByStateOrCity() {
+		int choice = 0;
+		int count = 0;
+		while (choice != 1 && choice != 2) {
+			System.out.println("Pick an option");
+			System.out.println("1. View person based on city");
+			System.out.println("2. View person based on state");
+			choice = Integer.parseInt(sc.nextLine());
+			if (choice == 1) {
+				ArrayList<Contacts> tempList = new ArrayList<Contacts>();
+				System.out.println("Enter the name of city");
+				String city = sc.nextLine().toLowerCase();
+				for (Map.Entry<String, ArrayList<Contacts>> mapElement : addressBook.entrySet()) {
+					tempList = mapElement.getValue();
+					tempList.stream().filter(obj -> obj.getCity().equals(city)).forEach(obj -> {
+						System.out.println(obj.getFirstName() + " " + obj.getLastName());
+					});
+					count++;
+				}
+				if (count == 0) {
+					System.out.println("City is not registered for any person in the address book");
+				}
+			} else if (choice == 2) {
+				ArrayList<Contacts> tempList = new ArrayList<Contacts>();
+				System.out.println("Enter the name of state");
+				String state = sc.nextLine().toLowerCase();
+				for (Map.Entry<String, ArrayList<Contacts>> mapElement : addressBook.entrySet()) {
+					tempList = mapElement.getValue();
+					tempList.stream().filter(obj -> obj.getState().equals(state)).forEach(obj -> {
+						System.out.println(obj.getFirstName() + " " + obj.getLastName());
+					});
+					count++;
+				}
+				if (count == 0) {
+					System.out.println("State is not registered for any person in the address book");
+				}
+			} else {
+				System.out.println("Choose valid option, Try again");
+			}
+		}
 	}
 
 	/*

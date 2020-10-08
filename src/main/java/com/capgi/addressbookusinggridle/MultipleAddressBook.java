@@ -238,6 +238,64 @@ public class MultipleAddressBook {
 			System.out.println("Address Book is empty!");
 		}
 	}
+
+	public void SortAddressBookByStateOrCityOrZip() {
+		int choice = 0;
+		int count = 0;
+		while (choice != 1 && choice != 2 && choice != 3) {
+			System.out.println("Pick an option");
+			System.out.println("1. Sort address book based on city");
+			System.out.println("2. Sort address book based on state");
+			System.out.println("3. Sort address book based on zip");
+			choice = Integer.parseInt(sc.nextLine());
+			if (choice == 1) {
+				ArrayList<Contacts> tempList = new ArrayList<Contacts>();
+				for (Map.Entry<String, ArrayList<Contacts>> mapElement : addressBook.entrySet()) {
+					tempList = mapElement.getValue();
+					tempList.stream().sorted((p1, p2) -> p1.getCity().compareTo(p2.getCity()))
+							.forEach(System.out::println);
+					count++;
+					System.out.println("------------------" + count);
+				}
+				if (count == 0) {
+					System.out.println("Address Book is empty!");
+				}
+
+			}
+
+			else if (choice == 2) {
+				ArrayList<Contacts> tempList = new ArrayList<Contacts>();
+				for (Map.Entry<String, ArrayList<Contacts>> mapElement : addressBook.entrySet()) {
+					tempList = mapElement.getValue();
+					tempList.stream().sorted((p1, p2) -> p1.getState().compareTo(p2.getState()))
+							.forEach(System.out::println);
+					count++;
+					System.out.println("------------------" + count);
+				}
+				if (count == 0) {
+					System.out.println("Address Book is empty!");
+				}
+
+			} else if (choice == 3) {
+				ArrayList<Contacts> tempList = new ArrayList<Contacts>();
+				for (Map.Entry<String, ArrayList<Contacts>> mapElement : addressBook.entrySet()) {
+					tempList = mapElement.getValue();
+					tempList.stream().sorted((p1, p2) -> p1.getZip().compareTo(p2.getZip()))
+							.forEach(System.out::println);
+					count++;
+					System.out.println("------------------" + count);
+				}
+				if (count == 0) {
+					System.out.println("Address Book is empty!");
+				}
+			}
+
+			else {
+				System.out.println("Choose valid option, Try again");
+			}
+		}
+
+	}
 	/*
 	 * public ArrayList<Contacts> getList(String bookName) { ArrayList<Contacts>
 	 * tempList = new ArrayList<Contacts>(); System.out.println(addressBook.size());

@@ -103,7 +103,7 @@ public class MultipleAddressBook {
 						addressBookObj.DeleteContact(firstName, lastName, tempList);
 					} else if (choice == 4) {
 						addressBookObj.DisplayContacts(tempList);
-					} else if (choice == 5) {
+					} else if (choice == 9) {
 						System.out.println("Back to main menu");
 						choice = 10;
 					} else {
@@ -122,21 +122,15 @@ public class MultipleAddressBook {
 		String fName = sc.nextLine();
 		System.out.println("Enter Last Name :");
 		String lName = sc.nextLine();
-		boolean check = false;
 		ArrayList<Contacts> tempList = new ArrayList<Contacts>();
 		for (Map.Entry<String, ArrayList<Contacts>> mapElement : addressBook.entrySet()) {
 
 			tempList = mapElement.getValue();
-			check = tempList.stream()
-					.anyMatch(obj -> obj.getFirstName().equals(fName) && obj.getLastName().equals(lName));
-			if (check) {
-				break;
-			}
-		}
-		if (check) {
-			tempList.stream()
+			tempList.stream().filter(obj -> obj.getFirstName().equals(fName) && obj.getLastName().equals(lName))
 					.forEach(obj -> System.out.println("City: " + obj.getCity() + " " + "State: " + obj.getState()));
-		} else {
+
+		}
+		if (tempList.stream().noneMatch(obj -> obj.getFirstName().equals(fName) && obj.getLastName().equals(lName))) {
 			System.out.println("Person not present");
 		}
 	}
@@ -183,6 +177,42 @@ public class MultipleAddressBook {
 		}
 	}
 
+	public void CountOfPersonInStateOrCity() {
+		int choice = 0;
+		long countOfCityOrState = 0;
+		long countOfCityOrStateFinal = 0;
+		while (choice != 1 && choice != 2) {
+			System.out.println("Pick an option");
+			System.out.println("1. View person count based on city");
+			System.out.println("2. View person count based on state");
+			choice = Integer.parseInt(sc.nextLine());
+			if (choice == 1) {
+				ArrayList<Contacts> tempList = new ArrayList<Contacts>();
+				System.out.println("Enter the name of city");
+				String city = sc.nextLine().toLowerCase();
+				for (Map.Entry<String, ArrayList<Contacts>> mapElement : addressBook.entrySet()) {
+					tempList = mapElement.getValue();
+					countOfCityOrState = tempList.stream().filter(obj -> obj.getCity().equals(city)).count();
+					countOfCityOrStateFinal = countOfCityOrStateFinal + countOfCityOrState;
+				}
+				System.out.println("No of person in " + city + " :" + countOfCityOrStateFinal);
+
+			} else if (choice == 2) {
+				ArrayList<Contacts> tempList = new ArrayList<Contacts>();
+				System.out.println("Enter the name of state");
+				String state = sc.nextLine().toLowerCase();
+				for (Map.Entry<String, ArrayList<Contacts>> mapElement : addressBook.entrySet()) {
+					tempList = mapElement.getValue();
+					countOfCityOrState = tempList.stream().filter(obj -> obj.getState().equals(state)).count();
+					countOfCityOrStateFinal = countOfCityOrStateFinal + countOfCityOrState;
+				}
+
+				System.out.println("No of person in " + state + " :" + countOfCityOrStateFinal);
+			} else {
+				System.out.println("Choose valid option, Try again");
+			}
+		}
+	}
 	/*
 	 * public ArrayList<Contacts> getList(String bookName) { ArrayList<Contacts>
 	 * tempList = new ArrayList<Contacts>(); System.out.println(addressBook.size());

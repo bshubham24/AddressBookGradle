@@ -118,6 +118,7 @@ public class MultipleAddressBook {
 	}
 
 	public void SearchCityOrStateByName() {
+		int check = 0;
 		System.out.println("Enter First Name :");
 		String fName = sc.nextLine();
 		System.out.println("Enter Last Name :");
@@ -130,7 +131,16 @@ public class MultipleAddressBook {
 					.forEach(obj -> System.out.println("City: " + obj.getCity() + " " + "State: " + obj.getState()));
 
 		}
-		if (tempList.stream().noneMatch(obj -> obj.getFirstName().equals(fName) && obj.getLastName().equals(lName))) {
+		for (Map.Entry<String, ArrayList<Contacts>> mapElement : addressBook.entrySet()) {
+
+			tempList = mapElement.getValue();
+			if (tempList.stream()
+					.anyMatch(obj -> obj.getFirstName().equals(fName) && obj.getLastName().equals(lName))) {
+				check = 1;
+				break;
+			}
+		}
+		if (check != 1) {
 			System.out.println("Person not present");
 		}
 	}

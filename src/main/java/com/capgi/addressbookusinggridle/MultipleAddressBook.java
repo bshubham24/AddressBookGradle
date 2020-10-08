@@ -223,6 +223,21 @@ public class MultipleAddressBook {
 			}
 		}
 	}
+
+	public void SortAddressBookByName() {
+		ArrayList<Contacts> tempList = new ArrayList<Contacts>();
+		int count = 0;
+		for (Map.Entry<String, ArrayList<Contacts>> mapElement : addressBook.entrySet()) {
+			tempList = mapElement.getValue();
+			tempList.stream().sorted((p1, p2) -> p1.getFirstName().compareTo(p2.getFirstName()))
+					.forEach(System.out::println);
+			count++;
+			System.out.println("------------------" + count);
+		}
+		if (count == 0) {
+			System.out.println("Address Book is empty!");
+		}
+	}
 	/*
 	 * public ArrayList<Contacts> getList(String bookName) { ArrayList<Contacts>
 	 * tempList = new ArrayList<Contacts>(); System.out.println(addressBook.size());

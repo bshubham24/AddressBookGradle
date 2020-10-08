@@ -17,13 +17,13 @@ public class MultipleAddressBook {
 		System.out.println("Give this address book a name ");
 		String bookName = sc.nextLine();
 		ArrayList<Contacts> tempList = new ArrayList<Contacts>();
-		while (choice != 6) {
+		while (choice != 10) {
 			System.out.println("Pick an option");
-			System.out.println("1. Add a contact(Duplicate not allowed)");
+			System.out.println("1. Add a contact");
 			System.out.println("2. Edit an existing Contact");
 			System.out.println("3. Delete a contact");
 			System.out.println("4. See the contact list");
-			System.out.println("5. Back to main menu");
+			System.out.println("9. Back to main menu");
 			choice = Integer.parseInt(sc.nextLine());
 
 			if (choice == 1) {
@@ -45,9 +45,9 @@ public class MultipleAddressBook {
 				addressBookObj.DeleteContact(firstName, lastName, tempList);
 			} else if (choice == 4) {
 				addressBookObj.DisplayContacts(tempList);
-			} else if (choice == 5) {
+			} else if (choice == 9) {
 				System.out.println("Back to main menu");
-				choice = 6;
+				choice = 10;
 			} else {
 				System.out.println("Enter correct choice");
 			}
@@ -71,13 +71,13 @@ public class MultipleAddressBook {
 			if (find) {
 				ArrayList<Contacts> tempList = addressBook.get(TempBookName);
 
-				while (choice != 6) {
+				while (choice != 10) {
 					System.out.println("Pick an option");
-					System.out.println("1. Add a contact");
+					System.out.println("1. Add a contact(Duplicate not allowed)");
 					System.out.println("2. Edit an existing Contact");
 					System.out.println("3. Delete a contact");
 					System.out.println("4. See the contact list");
-					System.out.println("5. Back to main menu");
+					System.out.println("9. Back to main menu");
 					choice = Integer.parseInt(sc.nextLine());
 
 					if (choice == 1) {
@@ -105,7 +105,7 @@ public class MultipleAddressBook {
 						addressBookObj.DisplayContacts(tempList);
 					} else if (choice == 5) {
 						System.out.println("Back to main menu");
-						choice = 6;
+						choice = 10;
 					} else {
 						System.out.println("Enter correct choice");
 					}
@@ -117,9 +117,18 @@ public class MultipleAddressBook {
 		}
 	}
 
+	public void SearchCityOrStateByName1() {
+		System.out.println("Enter First Name :");
+		String fName = sc.nextLine();
+		System.out.println("Enter Last Name :");
+		String lName = sc.nextLine();
+		addressBookObj.SearchCityOrStateByName(fName, lName, addressBook);
+	}
+
 	/*
 	 * public ArrayList<Contacts> getList(String bookName) { ArrayList<Contacts>
 	 * tempList = new ArrayList<Contacts>(); System.out.println(addressBook.size());
 	 * if (addressBook.size() != 0) { tempList = addressBook.get(bookName); return
 	 * tempList; } return tempList; }
-	 */}
+	 */
+}

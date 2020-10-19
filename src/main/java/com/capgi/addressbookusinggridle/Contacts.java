@@ -3,7 +3,24 @@ package com.capgi.addressbookusinggridle;
 
 public class Contacts {
 
-	String firstName, lastName, name, address, city, state, zip, phoneNo, email;
+	private String firstName, lastName, address, city, state, zip, phoneNo, email;
+
+	public Contacts(String firstName, String lastName, String address, String city, String state, String zip,
+			String phoneNo, String email) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.phoneNo = phoneNo;
+		this.email = email;
+	}
+
+	public Contacts() {
+
+	}
 
 	Validation validateContact = new Validation();
 

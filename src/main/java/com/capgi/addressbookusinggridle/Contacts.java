@@ -1,9 +1,25 @@
 
 package com.capgi.addressbookusinggridle;
 
-public class Contacts {
+import com.opencsv.bean.CsvBindByName;
 
-	private String firstName, lastName, address, city, state, zip, phoneNo, email;
+public class Contacts {
+	@CsvBindByName
+	private String firstName;
+	@CsvBindByName
+	private String lastName;
+	@CsvBindByName
+	private String address;
+	@CsvBindByName
+	private String city;
+	@CsvBindByName
+	private String state;
+	@CsvBindByName
+	private String zip;
+	@CsvBindByName
+	private String phoneNo;
+	@CsvBindByName
+	private String email;
 
 	public Contacts(String firstName, String lastName, String address, String city, String state, String zip,
 			String phoneNo, String email) {
@@ -154,7 +170,7 @@ public class Contacts {
 
 	@Override
 	public String toString() {
-		return "First Name :" + firstName + "\nLast Name :" + lastName + "\nAddress :" + address + "\nCity :" + city
+		return "\nFirst Name :" + firstName + "\nLast Name :" + lastName + "\nAddress :" + address + "\nCity :" + city
 				+ "\nState :" + state + "\nZip :" + zip + "\nPhone No :" + phoneNo + "\nEmail :" + email;
 	}
 }

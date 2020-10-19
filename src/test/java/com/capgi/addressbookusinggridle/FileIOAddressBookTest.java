@@ -1,5 +1,6 @@
 package com.capgi.addressbookusinggridle;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,23 @@ public class FileIOAddressBookTest {
 		contactList.add(contact1);
 		contactList.add(contact2);
 		fileIOServiceAddressBook.writeData(contactList);
-		Assert.assertEquals(16, fileIOServiceAddressBook.countEntries());
+		Assert.assertEquals(18, fileIOServiceAddressBook.countEntries());
+	}
+
+	@Test
+	public void givenContactsInCSVFileShouldRead() throws IOException {
+		FileIOServiceAddressBook fileIOServiceAddressBook = new FileIOServiceAddressBook();
+		List<Contacts> contactList = new ArrayList<>();
+		contactList = fileIOServiceAddressBook.readCsvFile();
+		System.out.println(contactList);
+		Assert.assertEquals(2, contactList.size());
+	}
+
+	@Test
+	public void writeContactsToCSVFile() throws IOException {
+		FileIOServiceAddressBook fileIOServiceAddressBook = new FileIOServiceAddressBook();
+
+		boolean result = fileIOServiceAddressBook.writeCsvFile();
+		Assert.assertEquals(true, result);
 	}
 }

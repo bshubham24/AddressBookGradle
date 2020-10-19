@@ -1,6 +1,7 @@
 package com.capgi.addressbookusinggridle;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -9,6 +10,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -17,8 +22,10 @@ public class FileIOServiceAddressBook {
 
 	public static String CONTACT_READ_FILE_NAME = "ContactsFileToRead.txt";
 	public static String CONTACT_WRITE_FILE_NAME = "ContactsFileToWrite.txt";
-	public static final String SAMPLE_CSV_FILE_PATH = "F:\\Capgemini_training1\\java_eclipse\\AddressBookUsingGridle\\src\\main\\java\\com\\capgi\\addressbookusinggridle\\FileRead.csv";
+	public static final String SAMPLE_CSV_FILE_PATH = "F:\\Capgemini_training1\\java_eclipse\\AddressBookUsingGridle\\FileRead.csv";
 	public static final String SAMPLE_CSV_FILE_WRITTER_PATH = "FileWrite.csv";
+	public static final String SAMPLE_JSON_FILE_PATH = "F:\\Capgemini_training1\\java_eclipse\\AddressBookUsingGridle\\ReadOnlyJSON.json";
+	public static final String SAMPLE_JSON_FILE_WRITER_PATH = "FilesWriter.json";
 
 	public List<Contacts> readData() {
 		List<Contacts> contactsList = new ArrayList<>();
@@ -102,4 +109,36 @@ public class FileIOServiceAddressBook {
 		}
 
 	}
+
+	public boolean writeIntoJsonFile(Contacts contacts) {
+		Gson gson = new Gson();
+		String json = gson.toJson(contacts);
+		try {
+			FileWriter fileWriter = new FileWriter(SAMPLE_JSON_FILE_WRITER_PATH);
+			fileWriter.write(json);
+			fileWriter.close();
+			return true;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean readJsonFile() {
+		try {
+			Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_JSON_FILE_PATH));
+			JsonParser jsonParser = new JsonParser();
+			JsonElement obj = jsonParser.parse(reader);
+			JsonArray contactList = (JsonArray) obj;
+			System.out.println(contactList);
+
+			return true;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

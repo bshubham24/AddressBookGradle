@@ -47,4 +47,21 @@ public class FileIOAddressBookTest {
 		boolean result = fileIOServiceAddressBook.writeCsvFile();
 		Assert.assertEquals(true, result);
 	}
+
+	@Test
+	public void writeContactsToJSONFile() {
+		FileIOServiceAddressBook fileIOServiceAddressBook = new FileIOServiceAddressBook();
+		Contacts contact = new Contacts("Shubham", "Bhawsar", "mp", "bhopal", "mp", "123456", "14 9478523699",
+				"shubham@gami.com");
+		boolean result = fileIOServiceAddressBook.writeIntoJsonFile(contact);
+		Assert.assertEquals(true, result);
+	}
+
+	@Test
+	public void readJSONFile() {
+		FileIOServiceAddressBook fileIOServiceAddressBook = new FileIOServiceAddressBook();
+
+		boolean result = fileIOServiceAddressBook.readJsonFile();
+		Assert.assertEquals(true, result);
+	}
 }

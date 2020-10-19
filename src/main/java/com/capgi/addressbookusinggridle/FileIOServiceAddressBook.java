@@ -17,7 +17,7 @@ public class FileIOServiceAddressBook {
 
 	public static String CONTACT_READ_FILE_NAME = "ContactsFileToRead.txt";
 	public static String CONTACT_WRITE_FILE_NAME = "ContactsFileToWrite.txt";
-	public static final String SAMPLE_CSV_FILE_PATH = "F:\\Capgemini_training1\\java_eclipse\\AddressBookUsingGridle\\src\\main\\java\\com\\capgi\\addressbookusinggridle\\FileRead.csv";
+	public static final String SAMPLE_CSV_FILE_PATH = "F:\\Capgemini_training1\\java_eclipse\\AddressBookUsingGridle\\FileRead.csv";
 	public static final String SAMPLE_CSV_FILE_WRITTER_PATH = "FileWrite.csv";
 
 	public List<Contacts> readData() {

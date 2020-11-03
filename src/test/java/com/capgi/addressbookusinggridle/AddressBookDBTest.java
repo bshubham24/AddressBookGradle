@@ -19,7 +19,7 @@ public class AddressBookDBTest {
 	@Test
 	public void givenAddressBookDB_ShouldMatchCount() throws AddressBookDBException {
 		List<Contacts> contactList = addressBookDBService.readContacts();
-		Assert.assertEquals(3, contactList.size());
+		Assert.assertEquals(5, contactList.size());
 	}
 
 	@Test
@@ -34,7 +34,7 @@ public class AddressBookDBTest {
 		LocalDate startDate = LocalDate.of(2020, 07, 01);
 		LocalDate endDate = LocalDate.now();
 		int noOfContacts = addressBookDBService.getContactsOnDateRange(startDate, endDate);
-		Assert.assertEquals(2, noOfContacts);
+		Assert.assertEquals(4, noOfContacts);
 	}
 
 	@Test
@@ -47,5 +47,13 @@ public class AddressBookDBTest {
 	public void givenAddressBookDB_WhenRetrivedBasedOnState_ShouldReturnCount() throws AddressBookDBException {
 		int noOfContacts = addressBookDBService.retriveBasedOnField("state", "MP");
 		Assert.assertEquals(1, noOfContacts);
+	}
+
+	@Test
+	public void whenContactAddedToDB_ShouldMatchCount() throws AddressBookDBException {
+		addressBookDBService.addContactToDB(5, "victoria", "pedretti", "bly manor", "westminster", "UK", "412563",
+				"97 1478523699", "notoriousvip@gmail.com", LocalDate.now());
+		List<Contacts> contactList = addressBookDBService.readContacts();
+		Assert.assertEquals(5, contactList.size());
 	}
 }

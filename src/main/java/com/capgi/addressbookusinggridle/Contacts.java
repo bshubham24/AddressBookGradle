@@ -38,13 +38,12 @@ public class Contacts {
 
 	}
 
-	Validation validateContact = new Validation();
-
 	public String getFirstName() {
 		return firstName;
 	}
 
 	public boolean setFirstName(String firstName) throws AddressBookException {
+		Validation validateContact = new Validation();
 		boolean b = validateContact.ValidateFirstName(firstName);
 		if (b) {
 			this.firstName = firstName;
@@ -61,6 +60,7 @@ public class Contacts {
 	}
 
 	public boolean setLastName(String lastName) throws AddressBookException {
+		Validation validateContact = new Validation();
 		boolean b = validateContact.ValidateLastName(lastName);
 		if (b)
 			this.lastName = lastName;
@@ -77,6 +77,7 @@ public class Contacts {
 	}
 
 	public boolean setAddress(String address) throws AddressBookException {
+		Validation validateContact = new Validation();
 		boolean b = validateContact.ValidateAddress(address);
 		if (b)
 			this.address = address;
@@ -93,6 +94,7 @@ public class Contacts {
 	}
 
 	public boolean setCity(String city) throws AddressBookException {
+		Validation validateContact = new Validation();
 		boolean b = validateContact.ValidateCity(city);
 		if (b)
 			this.city = city;
@@ -109,6 +111,7 @@ public class Contacts {
 	}
 
 	public boolean setState(String state) throws AddressBookException {
+		Validation validateContact = new Validation();
 		boolean b = validateContact.ValidateState(state);
 		if (b)
 			this.state = state;
@@ -125,6 +128,7 @@ public class Contacts {
 	}
 
 	public boolean setZip(String zip) throws AddressBookException {
+		Validation validateContact = new Validation();
 		boolean b = validateContact.ValidateZip(zip);
 		if (b)
 			this.zip = zip;
@@ -141,6 +145,7 @@ public class Contacts {
 	}
 
 	public boolean setPhoneNo(String phoneNo) throws AddressBookException {
+		Validation validateContact = new Validation();
 		boolean b = validateContact.ValidatePhoneNo(phoneNo);
 		if (b)
 			this.phoneNo = phoneNo;
@@ -157,6 +162,7 @@ public class Contacts {
 	}
 
 	public boolean setEmail(String email) throws AddressBookException {
+		Validation validateContact = new Validation();
 		boolean b = validateContact.ValidateEmail(email);
 		if (b)
 			this.email = email;

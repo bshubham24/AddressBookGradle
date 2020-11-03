@@ -36,4 +36,16 @@ public class AddressBookDBTest {
 		int noOfContacts = addressBookDBService.getContactsOnDateRange(startDate, endDate);
 		Assert.assertEquals(2, noOfContacts);
 	}
+
+	@Test
+	public void givenAddressBookDB_WhenRetrivedBasedOnCity_ShouldReturnCount() throws AddressBookDBException {
+		int noOfContacts = addressBookDBService.retriveBasedOnField("city", "City 1");
+		Assert.assertEquals(1, noOfContacts);
+	}
+
+	@Test
+	public void givenAddressBookDB_WhenRetrivedBasedOnState_ShouldReturnCount() throws AddressBookDBException {
+		int noOfContacts = addressBookDBService.retriveBasedOnField("state", "MP");
+		Assert.assertEquals(1, noOfContacts);
+	}
 }

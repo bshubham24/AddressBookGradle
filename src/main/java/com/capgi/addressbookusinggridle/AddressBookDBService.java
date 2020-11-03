@@ -56,4 +56,22 @@ public class AddressBookDBService {
 		return contactList;
 	}
 
+	public int updatePersonAddress(String firstName, String column, String value) throws AddressBookDBException {
+		String sql = String.format(
+				"update address a,user_info u set a.%s ='%s' where a.user_id = u.user_id and u.first_name = '%s';",
+				column, value, firstName);
+		try (Connection connection = this.getConnection()) {
+			Statement statement = connection.createStatement();
+			return statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			throw new AddressBookDBException(AddressBookDBException.ExceptionType.CONNECTION_ERROR, e.getMessage());
+		}
+	}
+
+	public Contacts isAddressBookInSyncWithDB(String firstName) throws AddressBookDBException {
+		List<Contacts> tempList = this.readContacts();
+		return tempList.stream().filter(contact -> contact.getFirstName().contentEquals(firstName)).findFirst()
+				.orElse(null);
+	}
+
 }

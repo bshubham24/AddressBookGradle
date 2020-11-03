@@ -20,4 +20,11 @@ public class AddressBookDBTest {
 		List<Contacts> contactList = addressBookDBService.readContacts();
 		Assert.assertEquals(3, contactList.size());
 	}
+
+	@Test
+	public void givenAddressBookDB_WhenStateUpdated_ShouldSync() throws AddressBookDBException {
+		addressBookDBService.updatePersonAddress("Terisa", "state", "MP");
+		Contacts contact = addressBookDBService.isAddressBookInSyncWithDB("Terisa");
+		Assert.assertEquals("MP", contact.getState());
+	}
 }

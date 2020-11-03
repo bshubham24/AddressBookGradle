@@ -1,10 +1,12 @@
 package com.capgi.addressbookusinggridle;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +74,22 @@ public class AddressBookDBService {
 		List<Contacts> tempList = this.readContacts();
 		return tempList.stream().filter(contact -> contact.getFirstName().contentEquals(firstName)).findFirst()
 				.orElse(null);
+	}
+
+	public int getContactsOnDateRange(LocalDate startDate, LocalDate endDate) throws AddressBookDBException {
+		String sql = String.format("SELECT user_id FROM user_info WHERE start BETWEEN '%s' AND '%s';",
+				Date.valueOf(startDate), Date.valueOf(endDate));
+		int noOfContacts = 0;
+		try (Connection connection = getConnection()) {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+			while (resultSet.next()) {
+				noOfContacts++;
+			}
+		} catch (SQLException e) {
+			throw new AddressBookDBException(AddressBookDBException.ExceptionType.CONNECTION_ERROR, e.getMessage());
+		}
+		return noOfContacts;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.capgi.addressbookusinggridle;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.Assert;
@@ -26,5 +27,13 @@ public class AddressBookDBTest {
 		addressBookDBService.updatePersonAddress("Terisa", "state", "MP");
 		Contacts contact = addressBookDBService.isAddressBookInSyncWithDB("Terisa");
 		Assert.assertEquals("MP", contact.getState());
+	}
+
+	@Test
+	public void givenAddressBookDB_WhenRetrivedBasedOnDate_ShouldReturnCount() throws AddressBookDBException {
+		LocalDate startDate = LocalDate.of(2020, 07, 01);
+		LocalDate endDate = LocalDate.now();
+		int noOfContacts = addressBookDBService.getContactsOnDateRange(startDate, endDate);
+		Assert.assertEquals(2, noOfContacts);
 	}
 }

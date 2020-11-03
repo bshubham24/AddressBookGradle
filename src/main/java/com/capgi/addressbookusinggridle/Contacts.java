@@ -1,6 +1,8 @@
 
 package com.capgi.addressbookusinggridle;
 
+import java.time.LocalDate;
+
 import com.opencsv.bean.CsvBindByName;
 
 public class Contacts {
@@ -20,6 +22,8 @@ public class Contacts {
 	private String phoneNo;
 	@CsvBindByName
 	private String email;
+
+	private LocalDate startDate;
 
 	public Contacts(String firstName, String lastName, String address, String city, String state, String zip,
 			String phoneNo, String email) {
@@ -174,9 +178,29 @@ public class Contacts {
 		return b;
 	}
 
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
+
 	@Override
 	public String toString() {
 		return "\nFirst Name :" + firstName + "\nLast Name :" + lastName + "\nAddress :" + address + "\nCity :" + city
 				+ "\nState :" + state + "\nZip :" + zip + "\nPhone No :" + phoneNo + "\nEmail :" + email;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Contacts that = (Contacts) o;
+		return this.firstName == that.firstName && this.lastName == that.lastName && this.address == that.address
+				&& this.city == that.city && this.state == that.state && this.zip == that.zip
+				&& this.phoneNo == that.phoneNo && this.email == that.email;
 	}
 }

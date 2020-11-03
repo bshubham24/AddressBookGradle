@@ -24,7 +24,6 @@ public class AddressBookDBService {
 	}
 
 	public List<Contacts> readContacts() throws AddressBookDBException {
-		// TODO Auto-generated method stub
 		String sql = "select u.first_name, u.last_name, a.address, a.city, a.state, a.zip, c.phone, c.email"
 				+ " from user_info u inner join contact c on c.user_id = u.user_id inner join address a on u.user_id = a.user_id;";
 		List<Contacts> contactList = new ArrayList<Contacts>();
@@ -79,6 +78,21 @@ public class AddressBookDBService {
 	public int getContactsOnDateRange(LocalDate startDate, LocalDate endDate) throws AddressBookDBException {
 		String sql = String.format("SELECT user_id FROM user_info WHERE start BETWEEN '%s' AND '%s';",
 				Date.valueOf(startDate), Date.valueOf(endDate));
+		int noOfContacts = 0;
+		try (Connection connection = getConnection()) {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+			while (resultSet.next()) {
+				noOfContacts++;
+			}
+		} catch (SQLException e) {
+			throw new AddressBookDBException(AddressBookDBException.ExceptionType.CONNECTION_ERROR, e.getMessage());
+		}
+		return noOfContacts;
+	}
+
+	public int retriveBasedOnField(String field, String value) throws AddressBookDBException {
+		String sql = String.format("SELECT user_id FROM address WHERE %s = '%s';", field, value);
 		int noOfContacts = 0;
 		try (Connection connection = getConnection()) {
 			Statement statement = connection.createStatement();

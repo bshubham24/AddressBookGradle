@@ -38,6 +38,12 @@ public class Contacts {
 		this.email = email;
 	}
 
+	public Contacts(String firstName, String lastName, String address, String city, String state, String zip,
+			String phoneNo, String email, LocalDate startDate) {
+		this(firstName, lastName, address, city, state, zip, phoneNo, email);
+		this.startDate = startDate;
+	}
+
 	public Contacts() {
 
 	}

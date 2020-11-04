@@ -1,6 +1,7 @@
 package com.capgi.addressbookusinggridle;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -51,9 +52,23 @@ public class AddressBookDBTest {
 
 	@Test
 	public void whenContactAddedToDB_ShouldMatchCount() throws AddressBookDBException {
-		addressBookDBService.addContactToDB(5, "victoria", "pedretti", "bly manor", "westminster", "UK", "412563",
+		addressBookDBService.addContactToDB("victoria", "pedretti", "bly manor", "westminster", "UK", "412563",
 				"97 1478523699", "notoriousvip@gmail.com", LocalDate.now());
 		List<Contacts> contactList = addressBookDBService.readContacts();
 		Assert.assertEquals(5, contactList.size());
+	}
+
+	@Test
+	public void whenAddedMultipleContacts_ShouldMatchCount() throws AddressBookDBException {
+		Contacts[] arrOfContacts = {
+				new Contacts("victoria", "pedretti", "bly manor", "westminster", "UK", "412563", "97 1478523699",
+						"notoriousvip@gmail.com", LocalDate.now()),
+				new Contacts("amelia", "rose", "bly manor", "westminster", "UK", "412563", "97 1478523699",
+						"ameliarose@gmail.com", LocalDate.now()),
+				new Contacts("rahul", "kohli", "bly manor", "westminster", "UK", "412563", "97 1478523699",
+						"rahulkohli@gmail.com", LocalDate.now()) };
+		addressBookDBService.addMultipleContacts(Arrays.asList(arrOfContacts));
+		List<Contacts> contactList = addressBookDBService.readContacts();
+		Assert.assertEquals(25, contactList.size());
 	}
 }

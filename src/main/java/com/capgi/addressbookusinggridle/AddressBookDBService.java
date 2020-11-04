@@ -8,12 +8,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AddressBookDBService {
 	List<Contacts> contactList = new ArrayList<Contacts>();
 
-	private Connection getConnection() throws AddressBookDBException {
+	private synchronized Connection getConnection() throws AddressBookDBException {
 		String jdbcURL = "jdbc:mysql://localhost:3306/address_book_service?characterEncoding=utf8";
 		String userName = "root";
 		String password = "CL@Liv#6@RM#13";
@@ -105,8 +107,8 @@ public class AddressBookDBService {
 		return noOfContacts;
 	}
 
-	public void addContactToDB(int user_id, String firstName, String lastName, String address, String city,
-			String state, String zip, String phoneNo, String email, LocalDate start) throws AddressBookDBException {
+	public void addContactToDB(String firstName, String lastName, String address, String city, String state, String zip,
+			String phoneNo, String email, LocalDate start) throws AddressBookDBException {
 
 		int id = -1;
 		Contacts contact = null;
@@ -119,11 +121,13 @@ public class AddressBookDBService {
 		}
 		try (Statement statement = connection.createStatement()) {
 			String sql = String.format(
-					"INSERT INTO user_info (user_id, first_name, last_name, start)" + "VALUES ('%s','%s','%s','%s')",
-					user_id, firstName, lastName, Date.valueOf(start));
-			int rowAffected = statement.executeUpdate(sql);
+					"INSERT INTO user_info (first_name, last_name, start)" + "VALUES ('%s','%s','%s')", firstName,
+					lastName, Date.valueOf(start));
+			int rowAffected = statement.executeUpdate(sql, statement.RETURN_GENERATED_KEYS);
 			if (rowAffected == 1) {
-				connection.close();
+				ResultSet resultSet = statement.getGeneratedKeys();
+				if (resultSet.next())
+					id = resultSet.getInt(1);
 			}
 		} catch (SQLException e) {
 			try {
@@ -135,11 +139,13 @@ public class AddressBookDBService {
 			throw new AddressBookDBException(AddressBookDBException.ExceptionType.INCORRECT_INFO, e.getMessage());
 		}
 		try (Statement statement = connection.createStatement()) {
-			String sql = String.format("INSERT INTO contact (user_id, phone, email)" + "VALUES ('%s','%s','%s')",
-					user_id, phoneNo, email);
-			int rowAffected = statement.executeUpdate(sql);
-			if (rowAffected != 1) {
-				connection.close();
+			String sql = String.format("INSERT INTO contact (user_id, phone, email)" + "VALUES ('%s','%s','%s')", id,
+					phoneNo, email);
+			int rowAffected = statement.executeUpdate(sql, statement.RETURN_GENERATED_KEYS);
+			if (rowAffected == 1) {
+				ResultSet resultSet = statement.getGeneratedKeys();
+				if (resultSet.next())
+					id = resultSet.getInt(1);
 			}
 		} catch (SQLException e) {
 			try {
@@ -153,8 +159,8 @@ public class AddressBookDBService {
 		try (Statement statement = connection.createStatement()) {
 			String sql = String.format(
 					"INSERT INTO address (user_id, address, city, state, zip)" + "VALUES ('%s','%s','%s','%s','%s')",
-					user_id, address, city, state, zip);
-			int rowAffected = statement.executeUpdate(sql);
+					id, address, city, state, zip);
+			int rowAffected = statement.executeUpdate(sql, statement.RETURN_GENERATED_KEYS);
 			if (rowAffected == 1) {
 				contactList.add(new Contacts(firstName, lastName, address, city, state, zip, phoneNo, email));
 			}
@@ -177,6 +183,33 @@ public class AddressBookDBService {
 					throw new AddressBookDBException(AddressBookDBException.ExceptionType.CONNECTION_ERROR,
 							e.getMessage());
 				}
+		}
+	}
+
+	public void addMultipleContacts(List<Contacts> contactsToAddList) throws AddressBookDBException {
+		Map<Integer, Boolean> contactStatusMap = new HashMap<Integer, Boolean>();
+		contactsToAddList.forEach(contact -> {
+			contactStatusMap.put(contact.hashCode(), false);
+			Runnable task = () -> {
+				try {
+
+					this.addContactToDB(contact.getFirstName(), contact.getLastName(), contact.getAddress(),
+							contact.getCity(), contact.getState(), contact.getZip(), contact.getPhoneNo(),
+							contact.getEmail(), contact.getStartDate());
+				} catch (AddressBookDBException e) {
+					e.printStackTrace();
+				}
+				contactStatusMap.put(contact.hashCode(), true);
+			};
+			Thread thread = new Thread(task, contact.getFirstName());
+			thread.start();
+		});
+		while (contactStatusMap.containsValue(false)) {
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				throw new AddressBookDBException(AddressBookDBException.ExceptionType.CONNECTION_ERROR, e.getMessage());
+			}
 		}
 	}
 }

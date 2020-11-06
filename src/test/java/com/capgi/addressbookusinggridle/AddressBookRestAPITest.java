@@ -41,6 +41,14 @@ public class AddressBookRestAPITest {
 		return request.put("/Contacts/" + contact.getId());
 	}
 
+	private Response deleteContact(Contacts contact) {
+		String empJson = new Gson().toJson(contact);
+		RequestSpecification request = RestAssured.given();
+		request.header("Content-Type", "application/json");
+		request.body(empJson);
+		return request.delete("/Contacts/" + contact.getId());
+	}
+
 	@Test
 	public void givenAddressBookDataInJsonServer_WhenRetrived_ShouldMatchCount() {
 		Contacts[] contacts = getContactList();
@@ -90,7 +98,7 @@ public class AddressBookRestAPITest {
 	}
 
 	@Test
-	public void givenEmployeeSalary_WhenUpdated_ShouldMatch200Response() throws AddressBookException {
+	public void givenContact_WhenUpdated_ShouldMatch200Response() throws AddressBookException {
 		Contacts[] contacts = getContactList();
 		AddressBook addressBook;
 		addressBook = new AddressBook(Arrays.asList(contacts));
@@ -100,5 +108,20 @@ public class AddressBookRestAPITest {
 		Response response = this.updateContact(contact);
 		int statusCode = response.getStatusCode();
 		Assert.assertEquals(200, statusCode);
+	}
+
+	@Test
+	public void givenContact_WhenDeleted_ShouldMatch200Response() {
+		Contacts[] contacts = getContactList();
+		AddressBook addressBook;
+		addressBook = new AddressBook(Arrays.asList(contacts));
+
+		Contacts contact = addressBook.getContact("Shivendra");
+		Response response = deleteContact(contact);
+		int statusCode = response.getStatusCode();
+		Assert.assertEquals(200, statusCode);
+
+		addressBook.deleteContact("Shivendra");
+		Assert.assertEquals(5, addressBook.contactList.size());
 	}
 }

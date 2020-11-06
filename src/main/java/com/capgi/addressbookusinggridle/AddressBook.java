@@ -223,6 +223,12 @@ public class AddressBook {
 		return contact;
 	}
 
+	public void deleteContact(String name) {
+		Contacts contact = this.getContact(name);
+		if (contact != null)
+			contactList.remove(contact);
+	}
+
 	public void DeleteContact(String firstName, String lastName, ArrayList<Contacts> tempList) {
 		if (tempList.isEmpty()) {
 			System.out.println("No contacts present");

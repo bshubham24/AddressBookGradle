@@ -1,0 +1,70 @@
+{
+  "Contacts": [
+    {
+      "id": 1,
+      "firstName": "Shubham",
+      "lastName": "Bhawsar",
+      "address": "arera colony",
+      "city": "Bhopal",
+      "state": "Madhya Pradesh",
+      "zip": "456321",
+      "phoneNo": "91 9478523699",
+      "email": "abc@gmail.com"
+    },
+    {
+      "id": 2,
+      "firstName": "Arijit",
+      "lastName": "Singh",
+      "address": "bandra",
+      "city": "Mumbai",
+      "state": "MH",
+      "zip": "412563",
+      "phoneNo": "91 7896541233",
+      "email": "ari@gmail.com"
+    },
+    {
+      "id": 3,
+      "firstName": "Neha",
+      "lastName": "Kakkar",
+      "address": "thane",
+      "city": "Mumbai",
+      "state": "MH",
+      "zip": "415236",
+      "phoneNo": "91 7896541233",
+      "email": "neha@gmail.com"
+    },
+    {
+      "firstName": "Shivendra",
+      "lastName": "rathore",
+      "address": "alpha",
+      "city": "devas",
+      "state": "mp",
+      "zip": "145236",
+      "phoneNo": "91 9456565685",
+      "email": "shiv@gmail.com",
+      "id": 4
+    },
+    {
+      "firstName": "Munna",
+      "lastName": "Tripathi",
+      "address": "thripathi palace",
+      "city": "Mirzapur",
+      "state": "UP",
+      "zip": "145236",
+      "phoneNo": "91 9478523699",
+      "email": "KingOfMirzapur@gmail.com",
+      "id": 5
+    },
+    {
+      "firstName": "Guddu",
+      "lastName": "Bhaiya",
+      "address": "ghar",
+      "city": "Mirzapur",
+      "state": "UP",
+      "zip": "145236",
+      "phoneNo": "91 9478523699",
+      "email": "prideOfMirzapur@gmail.com",
+      "id": 6
+    }
+  ]
+}

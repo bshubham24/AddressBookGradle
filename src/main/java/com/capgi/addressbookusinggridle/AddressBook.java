@@ -209,6 +209,20 @@ public class AddressBook {
 		}
 	}
 
+	public void updateContact(String name, String address) throws AddressBookException {
+
+		Contacts contact = this.getContact(name);
+		if (contact != null)
+			contact.setAddress(address);
+	}
+
+	public Contacts getContact(String name) {
+		Contacts contact;
+		contact = this.contactList.stream().filter(contactObj -> contactObj.getFirstName().equals(name)).findFirst()
+				.orElse(null);
+		return contact;
+	}
+
 	public void DeleteContact(String firstName, String lastName, ArrayList<Contacts> tempList) {
 		if (tempList.isEmpty()) {
 			System.out.println("No contacts present");

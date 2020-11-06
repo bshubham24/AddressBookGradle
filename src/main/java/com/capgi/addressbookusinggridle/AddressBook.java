@@ -1,6 +1,7 @@
 package com.capgi.addressbookusinggridle;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.function.Predicate;
 
@@ -9,6 +10,20 @@ public class AddressBook {
 	Contacts contactObj = new Contacts();
 	String fName = null;
 	String lName = null;
+
+	List<Contacts> contactList;
+
+	public AddressBook(List<Contacts> contactList) {
+		this();
+		this.contactList = new ArrayList<Contacts>(contactList);
+	}
+
+	public AddressBook() {
+	}
+
+	public void addNewContact(Contacts contact) {
+		contactList.add(contact);
+	}
 
 	public Contacts AddContact(String bookName, ArrayList<Contacts> tempList) {
 		Contacts contactObj = new Contacts();
@@ -36,15 +51,7 @@ public class AddressBook {
 			}
 		}
 		check = false;
-		/*
-		 * boolean duplicate = false; //
-		 * System.out.println(multipleAddressBook.getList(bookName).size()); if
-		 * (multipleAddressBook.getList(bookName).size() != 0) { Predicate<Contacts> Obj
-		 * = (item) -> item.getFirstName().equals(fName) &&
-		 * item.getLastName().equals(lName); duplicate =
-		 * multipleAddressBook.getList(bookName).stream().anyMatch(Obj);
-		 * System.out.println("inside duplicate"); }
-		 */
+
 		boolean duplicate = false;
 		if (tempList.size() != 0) {
 			Predicate<Contacts> Obj = (item) -> item.getFirstName().equals(fName) && item.getLastName().equals(lName);

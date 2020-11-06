@@ -69,6 +69,6 @@ public class AddressBookDBTest {
 						"rahulkohli@gmail.com", LocalDate.now()) };
 		addressBookDBService.addMultipleContacts(Arrays.asList(arrOfContacts));
 		List<Contacts> contactList = addressBookDBService.readContacts();
-		Assert.assertEquals(25, contactList.size());
+		Assert.assertEquals(52, contactList.size());
 	}
 }

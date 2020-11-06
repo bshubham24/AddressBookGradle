@@ -22,6 +22,7 @@ public class Contacts {
 	private String phoneNo;
 	@CsvBindByName
 	private String email;
+	private int id;
 
 	private LocalDate startDate;
 
@@ -41,6 +42,18 @@ public class Contacts {
 	public Contacts(String firstName, String lastName, String address, String city, String state, String zip,
 			String phoneNo, String email, LocalDate startDate) {
 		this(firstName, lastName, address, city, state, zip, phoneNo, email);
+		this.startDate = startDate;
+	}
+
+	public Contacts(int id, String firstName, String lastName, String address, String city, String state, String zip,
+			String phoneNo, String email) {
+		this(firstName, lastName, address, city, state, zip, phoneNo, email);
+		this.setId(id);
+	}
+
+	public Contacts(int id, String firstName, String lastName, String address, String city, String state, String zip,
+			String phoneNo, String email, LocalDate startDate) {
+		this(id, firstName, lastName, address, city, state, zip, phoneNo, email);
 		this.startDate = startDate;
 	}
 
@@ -190,6 +203,14 @@ public class Contacts {
 
 	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override

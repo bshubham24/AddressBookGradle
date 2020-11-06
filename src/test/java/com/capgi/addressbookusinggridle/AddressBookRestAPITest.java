@@ -39,7 +39,7 @@ public class AddressBookRestAPITest {
 		AddressBook addressBook;
 		addressBook = new AddressBook(Arrays.asList(contacts));
 		long noOfEntries = addressBook.contactList.size();
-		Assert.assertEquals(3, noOfEntries);
+		Assert.assertEquals(6, noOfEntries);
 	}
 
 	@Test

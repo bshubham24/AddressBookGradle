@@ -33,6 +33,14 @@ public class AddressBookRestAPITest {
 		return requestSpecification.post("/Contacts");
 	}
 
+	private Response updateContact(Contacts contact) {
+		String empJson = new Gson().toJson(contact);
+		RequestSpecification request = RestAssured.given();
+		request.header("Content-Type", "application/json");
+		request.body(empJson);
+		return request.put("/Contacts/" + contact.getId());
+	}
+
 	@Test
 	public void givenAddressBookDataInJsonServer_WhenRetrived_ShouldMatchCount() {
 		Contacts[] contacts = getContactList();
@@ -79,5 +87,18 @@ public class AddressBookRestAPITest {
 		}
 		long entries = addressBook.contactList.size();
 		Assert.assertEquals(6, entries);
+	}
+
+	@Test
+	public void givenEmployeeSalary_WhenUpdated_ShouldMatch200Response() throws AddressBookException {
+		Contacts[] contacts = getContactList();
+		AddressBook addressBook;
+		addressBook = new AddressBook(Arrays.asList(contacts));
+
+		addressBook.updateContact("Guddu", "farrar");
+		Contacts contact = addressBook.getContact("Guddu");
+		Response response = this.updateContact(contact);
+		int statusCode = response.getStatusCode();
+		Assert.assertEquals(200, statusCode);
 	}
 }
